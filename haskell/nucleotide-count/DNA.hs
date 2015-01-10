@@ -1,18 +1,17 @@
 {-# LANGUAGE TupleSections #-}
 module DNA where
 
-import Data.Map.Strict ( Map, (!), fromListWith )
+import Data.Map.Strict ( fromListWith, Map )
+import Data.Char
 
-type Nucleotide = Char
-
-dna :: [Nucleotide]
+dna :: String 
 dna = "ACGT"
 
-count :: Nucleotide -> [Nucleotide] -> Int
+count :: Char -> String -> Int
 count nuc strand
-    | nuc `elem` dna = nucleotideCounts strand ! nuc
-    | nuc == 'U' = 0
+    | nuc `elem` dna = length $ Prelude.filter (==nuc) (Prelude.map toUpper strand)
     | otherwise = error $ "invalid nucleotide " ++ show nuc
 
-nucleotideCounts :: [Nucleotide] -> Map Nucleotide Int
-nucleotideCounts = fromListWith (+) . (zeros ++) . map (,1) where zeros = map (,0) dna
+nucleotideCounts ::  Num a => String -> Map Char a
+nucleotideCounts xs = Data.Map.Strict.fromListWith (+) . (zeros ++) . Prelude.map (,1) $ Prelude.map toUpper xs
+    where zeros = Prelude.map (,0) dna

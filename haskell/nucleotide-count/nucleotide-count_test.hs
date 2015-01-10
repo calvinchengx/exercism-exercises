@@ -1,7 +1,6 @@
 import Test.HUnit (Assertion, (@=?), runTestTT, assertFailure, Test(..), Counts(..))
 import System.Exit (ExitCode(..), exitWith)
-{-import DNA (count, nucleotideCounts)-}
-import DNA (count)
+import DNA (count, nucleotideCounts)
 import Data.Map (fromList)
 import qualified Control.Exception as E
 
@@ -37,16 +36,16 @@ countTests =
     assertError "invalid nucleotide 'X'" $ count 'X' "GACT"
   ]
 
-{-nucleotideCountTests :: [Test]-}
-{-nucleotideCountTests =-}
-  {-[ testCase "empty dna strand has no nucleotides" $-}
-    {-fromList [('A', 0), ('T', 0), ('C', 0), ('G', 0)] @=?-}
-    {-nucleotideCounts ""-}
-  {-, testCase "repetitive-sequence-has-only-guanosine" $-}
-    {-fromList [('A', 0), ('T', 0), ('C', 0), ('G', 8)] @=?-}
-    {-nucleotideCounts "GGGGGGGG"-}
-  {-, testCase "counts all nucleotides" $-}
-    {-fromList [('A', 20), ('T', 21), ('C', 12), ('G', 17)] @=?-}
-    {-nucleotidecounts ("agcttttcattctgactgcaacgggcaatatgtctctgtgtggattaaaaaaa" ++-}
-                      {-"gagtgtctgatagcagc")-}
-  {-]-}
+nucleotideCountTests :: [Test]
+nucleotideCountTests =
+  [ testCase "empty dna strand has no nucleotides" $
+    fromList [('A', 0), ('T', 0), ('C', 0), ('G', 0)] @=?
+    nucleotideCounts ""
+  , testCase "repetitive-sequence-has-only-guanosine" $
+    fromList [('A', 0), ('T', 0), ('C', 0), ('G', 8)] @=?
+    nucleotideCounts "GGGGGGGG"
+  , testCase "counts all nucleotides" $
+    fromList [('A', 20), ('T', 21), ('C', 12), ('G', 17)] @=?
+    nucleotideCounts ("agcttttcattctgactgcaacgggcaatatgtctctgtgtggattaaaaaaa" ++
+                      "gagtgtctgatagcagc")
+  ]
