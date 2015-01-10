@@ -1,6 +1,6 @@
 module Sublist 
 (
-    Sublist(Equal, Sublist, Superlist, Unequal), 
+    Sublist(..), 
     sublist
 )
 where
@@ -17,7 +17,11 @@ search needle haystack =
 
 sublist :: Eq a => [a] -> [a] -> Sublist
 sublist x y 
-    | search x y && search y x = Equal
-    | search x y    = Sublist
-    | search y x    = Superlist
+    | sub && super  = Equal
+    | sub           = Sublist
+    | super         = Superlist
     | otherwise     = Unequal
+    where 
+        sub = search x y
+        super = search y x
+            
